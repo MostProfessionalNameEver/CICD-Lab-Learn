@@ -1,0 +1,16 @@
+name: Injection Demo
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: 'Simulated PR title'
+        required: true
+        default: 'fix: typo'
+
+jobs:
+  vulnerable-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print the title (vulnerable way)
+        run: echo "Processing PR titled: ${{ github.event.inputs.title }}"
