@@ -1,0 +1,28 @@
+name: PR Target Demo
+
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+
+jobs:
+  vulnerable-checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR head (the dangerous part)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Show secret exists
+        env:
+          TOKEN: ${{ secrets.MY_SECRET_TOKEN }}
+        run: |
+          echo "Token length is ${#TOKEN}"
+
+      - name: Run whatever is in the PR's script
+        run: |
+          if [ -f ./malicious.sh ]; then
+            bash ./malicious.sh
+          else
+            echo "no malicious.sh found in this PR"
+          fi
