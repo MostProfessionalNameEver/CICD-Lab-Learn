@@ -12,7 +12,8 @@ jobs:
   vulnerable-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Print the title (fixed way)
+      - name: Print the title fixed way
         env:
           TITLE: ${{ github.event.inputs.title }}
-        run: echo "Processing PR titled: $TITLE"
+        run: |
+          echo "Processing PR titled: $TITLE"
